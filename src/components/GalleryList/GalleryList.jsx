@@ -1,16 +1,34 @@
 import GalleryItem from "../GalleryItem/GalleryItem";
-import { Grid } from "@mui/material";
+import * as React from 'react';
+import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 
-export default function GalleryList() {
+
+
+export default function GalleryList({ picturesList }) {
+   
     return (
-        <>
+        <div>
 
-        <p>The gallery goes here!</p>
-        <img src="images/goat_small.jpg"/>
+        <h2>Gallery List</h2>
 
-        <p>Gallery List</p>
+        
+     
+        <Container maxWidth="md">
+        <Grid container spacing={4}>
+        {picturesList.map(picture => {
+            return (
+            <Grid item md={3} key={picture.id}>
+                <GalleryItem picture={picture}/>
+            </Grid>
+            )})
+            }
+        </Grid>
+        </Container>
 
-        <GalleryItem />
-        </>
+        </div>
+
     );
 }
