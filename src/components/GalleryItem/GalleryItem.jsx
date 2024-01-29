@@ -32,7 +32,7 @@ export default function GalleryItem({ picture, getPicturesCallback }) {
           <div data-testid="toggle" className="card" onClick={flipCard}>
           <img src={picture.url} alt={picture.title} className="card-image"/>
           </div>
-          <div className="card card-back" onClick={flipCard}>
+          <div className="card card-back" onClick={flipCard} >
             <h2>{picture.title}</h2>
             <h3 data-testid="description">{picture.description}</h3>
           </div>
