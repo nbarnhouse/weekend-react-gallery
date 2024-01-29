@@ -1,53 +1,60 @@
-import Card  from "@mui/material/Card";
-
-import CardContent from '@mui/material/CardContent';
-import IconButton from '@mui/material/IconButton';
-import CardHeader  from "@mui/material/CardHeader";
-import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
-import CardActions from '@mui/material/CardActions';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import { useState } from "react";
+import ReactCardFlip from "react-card-flip";
+import './GalleryItem.css';
+import Button from "@mui/material/Button";
+import { blueGrey } from "@mui/material/colors";
+import axios from "axios";
 
 
 
+export default function GalleryItem({ picture, getPicturesCallback }) {
 
-export default function GalleryItem({ picture }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+
+  function flipCard(){
+    setIsFlipped(!isFlipped)
+  };
+
+    const addLikes = (id) => {
+    console.log(`Picture ID: ${id}`);
+
+    // Make Axios call to update likes
+    axios.put(`/api/gallery/like/${id}`)
+      .then(() => {
+        
+        getPicturesCallback();
+      })
+      .catch((err) => {
+        console.error('ERROR:', err);
+      });
+  }
 
     return (
-        <>
-        <Card>
-          
-        <CardMedia
-        component="img"
-        height="194"
-        image="public/images/goat_small.jpg"
-        alt="React Image"
-        />
+      <div data-testid="galleryItem">
+        <ReactCardFlip flipDirection="horizontal" isFlipped={isFlipped}>
+          <div className="card" onClick={flipCard}>
+          <img src={picture.url} alt={picture.title} className="card-image"/>
+          </div>
+          <div className="card card-back" onClick={flipCard}>
+            <h2>{picture.title}</h2>
+            <h3 data-testid="description">{picture.description}</h3>
+          </div>
+        </ReactCardFlip>
 
 
-        
-           <CardHeader title={picture.title}
-        subheader="Likes: ${picture.likes}" />
+        <Button variant="contained"
+                  color="primary"
+                  style={{ backgroundColor: blueGrey[500] }}
+                  onClick={() => addLikes(picture.id)} data-testid="like">
+                  Like
+                </Button>
+
+              <div>
+                {picture.likes} like(s) for this picture!
+              </div>
 
 
-
-   
-
-        <CardContent>
-        <Typography variant="body2" color="text.secondary">
-        {picture.description}
-        </Typography>
-      </CardContent>
-
-      <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        </CardActions>
-
-        </Card>
-        </>
-
+      </div>
     
     );
 }

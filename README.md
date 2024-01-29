@@ -1,9 +1,7 @@
 # Project Name
 
-[Project Instructions](./INSTRUCTIONS.md), this line may be removed once you have updated the README.md
+React Gallery Listing
 
 ## Description
 
-Your project description goes here. What problem did you solve? How did you solve it?
-
-Additional README details can be found [here](https://github.com/PrimeAcademy/readme-template/blob/master/README.md).
+This project displays artwork on cards with a flipping feature that display's information about the cards. Users can also like the images and a total number of likes can be displayed.

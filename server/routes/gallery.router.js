@@ -8,11 +8,13 @@ router.put('/like/:id', (req, res) => {
   const pictureData = req.body;
   
   console.log(`Update To Do: ${pictureData}`);
+
+  const likesIncrement = pictureData.likes;
   
-  const queryText = `UPDATE "gallery" SET "likes" = $1 WHERE "id" = $2;`;
-  
-  pool
-  .query(queryText, [pictureData.likes, id])
+  const queryText = `UPDATE "gallery" SET "likes" = "likes" + 1 WHERE "id" = $1;`;
+
+   pool
+  .query(queryText, [id])
   .then((result) => {
     res.sendStatus(200);
   })

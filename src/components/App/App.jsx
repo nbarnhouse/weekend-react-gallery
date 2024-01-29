@@ -3,16 +3,18 @@ import Header from "../Header/Header";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function App() {
+export default function App() {
   const [picturesList, setPicturesList] = useState([])
-
+  
   useEffect(() => {
+    console.log('Hello');
     getPictures()
-})
+  }, []);
 
-const getPictures = () => {
-    axios.get('api/gallery')
+  const getPictures = () => {
+    axios.get('/api/gallery')
       .then(response => {
+        console.log('SERVER DATA:', response);
         setPicturesList(response.data)
       })
       .catch(err => {
@@ -21,12 +23,11 @@ const getPictures = () => {
       })
   }
 
-    return (
-      <>
-        <Header />
-        <GalleryList picturesList={picturesList}/>
-      </>
-    );
-}
-
-export default App;
+  return (
+    <div data-testid="app">
+      <Header />
+      <GalleryList picturesList={picturesList}
+      getPicturesCallback={getPictures} />
+    </div>
+  )
+};

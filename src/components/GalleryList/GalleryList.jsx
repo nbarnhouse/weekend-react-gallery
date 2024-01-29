@@ -1,34 +1,29 @@
+import { useState } from "react";
 import GalleryItem from "../GalleryItem/GalleryItem";
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
+import Grid from "@mui/material/Grid";
+import Container from "@mui/material/Container";
 
+import './GalleryList.css';
 
+const GalleryList = ({ picturesList, getPicturesCallback}) => {
 
-export default function GalleryList({ picturesList }) {
-   
-    return (
-        <div>
+  return (
+    <div>
+      <h2>Click each Image to find out more information!</h2>
+      <Container maxWidth="lg">
 
-        <h2>Gallery List</h2>
+        <Grid container spacing={6} data-testid="galleryList">
+          {picturesList.map((picture) => (
 
-        
-     
-        <Container maxWidth="md">
-        <Grid container spacing={4}>
-        {picturesList.map(picture => {
-            return (
-            <Grid item md={3} key={picture.id}>
-                <GalleryItem picture={picture}/>
+            <Grid item key={picture.id} className="card-container" data-testid="galleryList">
+                <GalleryItem picture={picture} 
+                getPicturesCallback = {getPicturesCallback} />
             </Grid>
-            )})
-            }
+          ))}
         </Grid>
-        </Container>
+      </Container>
+    </div>
+  )
+};
 
-        </div>
-
-    );
-}
+export default GalleryList;
